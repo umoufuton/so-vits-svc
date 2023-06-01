@@ -72,7 +72,7 @@ def train():
     g_0_path = os.path.join(pretrained_model_path, "G_0.pth")
     shutil.copy(d_0_path, os.path.join("logs/44k", "D_0.pth"))
     shutil.copy(g_0_path, os.path.join("logs/44k", "G_0.pth"))
-    train_cmd = r"..\so-vits-svc\workenv\python.exe train.py -c configs/config.json -m 44k"
+    train_cmd = "python train.py -c configs/config.json -m 44k"
     subprocess.Popen(["cmd", "/c", "start", "cmd", "/k", train_cmd])
     return "Training successfully started."
 
@@ -84,9 +84,9 @@ def pipeline(input_dir):
         if wav.endswith(".wav"):
             shutil.move(os.path.join(output, wav), "dataset_raw/speaker")
     preprocess_commands = [
-        r"..\so-vits-svc\workenv\python.exe resample.py",
-        r"..\so-vits-svc\workenv\python.exe preprocess_flist_config.py --speech_encoder vec768l12",
-        r"..\so-vits-svc\workenv\python.exe preprocess_hubert_f0.py --f0_predictor dio"
+        "python resample.py",
+        "python preprocess_flist_config.py --speech_encoder vec768l12",
+        "python preprocess_hubert_f0.py --f0_predictor crepe"
         ]
     accumulated_output = ""
     dataset = os.listdir("dataset/44k")
